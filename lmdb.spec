@@ -4,27 +4,48 @@
 #
 Name     : lmdb
 Version  : LMDB_0.9.18
-Release  : 1
+Release  : 2
 URL      : https://github.com/LMDB/lmdb/archive/LMDB_0.9.18.tar.gz
 Source0  : https://github.com/LMDB/lmdb/archive/LMDB_0.9.18.tar.gz
 Summary  : No detailed summary available
 Group    : Development/Tools
 License  : OLDAP-2.8
+Requires: lmdb-bin
+Requires: lmdb-doc
+Patch1: build.patch
 
 %description
 No detailed description available
 
+%package bin
+Summary: bin components for the lmdb package.
+Group: Binaries
+
+%description bin
+bin components for the lmdb package.
+
+
 %package dev
 Summary: dev components for the lmdb package.
 Group: Development
+Requires: lmdb-bin
 Provides: lmdb-devel
 
 %description dev
 dev components for the lmdb package.
 
 
+%package doc
+Summary: doc components for the lmdb package.
+Group: Documentation
+
+%description doc
+doc components for the lmdb package.
+
+
 %prep
 %setup -q -n lmdb-LMDB_0.9.18
+%patch1 -p1
 
 %build
 pushd libraries/liblmdb/
@@ -39,16 +60,19 @@ popd
 
 %files
 %defattr(-,root,root,-)
-/usr/local/bin/mdb_copy
-/usr/local/bin/mdb_dump
-/usr/local/bin/mdb_load
-/usr/local/bin/mdb_stat
-/usr/local/lib/liblmdb.so
-/usr/local/share/man/man1/mdb_copy.1
-/usr/local/share/man/man1/mdb_dump.1
-/usr/local/share/man/man1/mdb_load.1
-/usr/local/share/man/man1/mdb_stat.1
+
+%files bin
+%defattr(-,root,root,-)
+/usr/bin/mdb_copy
+/usr/bin/mdb_dump
+/usr/bin/mdb_load
+/usr/bin/mdb_stat
 
 %files dev
 %defattr(-,root,root,-)
-/usr/local/include/lmdb.h
+/usr/include/*.h
+/usr/lib64/*.so
+
+%files doc
+%defattr(-,root,root,-)
+%doc /usr/share/man/man1/*
