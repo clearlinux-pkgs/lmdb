@@ -1,0 +1,15 @@
+--- lmdb-LMDB_0.9.18/libraries/liblmdb/Makefile~	2016-02-05 21:22:15.000000000 +0000
++++ lmdb-LMDB_0.9.18/libraries/liblmdb/Makefile	2016-05-15 02:56:05.080164705 +0000
+@@ -26,10 +26,10 @@
+ CFLAGS	= $(THREADS) $(OPT) $(W) $(XCFLAGS)
+ LDLIBS	=
+ SOLIBS	=
+-prefix	= /usr/local
++prefix	= /usr/
+ exec_prefix = $(prefix)
+ bindir = $(exec_prefix)/bin
+-libdir = $(exec_prefix)/lib
++libdir = $(exec_prefix)/lib64
+ includedir = $(prefix)/include
+ datarootdir = $(prefix)/share
+ mandir = $(datarootdir)/man
