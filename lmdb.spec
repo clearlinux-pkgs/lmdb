@@ -4,7 +4,7 @@
 #
 Name     : lmdb
 Version  : 0.9.21
-Release  : 8
+Release  : 9
 URL      : https://github.com/LMDB/lmdb/archive/LMDB_0.9.21.tar.gz
 Source0  : https://github.com/LMDB/lmdb/archive/LMDB_0.9.21.tar.gz
 Summary  : No detailed summary available
