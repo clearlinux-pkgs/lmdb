@@ -4,13 +4,14 @@
 #
 Name     : lmdb
 Version  : 0.9.23
-Release  : 12
+Release  : 13
 URL      : https://github.com/LMDB/lmdb/archive/LMDB_0.9.23.tar.gz
 Source0  : https://github.com/LMDB/lmdb/archive/LMDB_0.9.23.tar.gz
-Summary  : No detailed summary available
+Summary  : Symas Lightning Memory-Mapped Database
 Group    : Development/Tools
 License  : OLDAP-2.8
 Requires: lmdb-bin = %{version}-%{release}
+Requires: lmdb-lib = %{version}-%{release}
 Requires: lmdb-license = %{version}-%{release}
 Requires: lmdb-man = %{version}-%{release}
 Patch1: build.patch
@@ -31,11 +32,21 @@ bin components for the lmdb package.
 %package dev
 Summary: dev components for the lmdb package.
 Group: Development
+Requires: lmdb-lib = %{version}-%{release}
 Requires: lmdb-bin = %{version}-%{release}
 Provides: lmdb-devel = %{version}-%{release}
 
 %description dev
 dev components for the lmdb package.
+
+
+%package lib
+Summary: lib components for the lmdb package.
+Group: Libraries
+Requires: lmdb-license = %{version}-%{release}
+
+%description lib
+lib components for the lmdb package.
 
 
 %package license
@@ -63,14 +74,14 @@ export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C
-export SOURCE_DATE_EPOCH=1545411101
+export SOURCE_DATE_EPOCH=1547433910
 pushd libraries/liblmdb/
 make  %{?_smp_mflags}
 popd
 
 
 %install
-export SOURCE_DATE_EPOCH=1545411101
+export SOURCE_DATE_EPOCH=1547433910
 rm -rf %{buildroot}
 mkdir -p %{buildroot}/usr/share/package-licenses/lmdb
 cp libraries/liblmdb/COPYRIGHT %{buildroot}/usr/share/package-licenses/lmdb/libraries_liblmdb_COPYRIGHT
@@ -92,6 +103,9 @@ popd
 %files dev
 %defattr(-,root,root,-)
 /usr/include/*.h
+
+%files lib
+%defattr(-,root,root,-)
 /usr/lib64/liblmdb.so
 
 %files license
