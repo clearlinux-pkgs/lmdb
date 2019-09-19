@@ -1,0 +1,56 @@
+From 01fc5eda4ecafb0a15c0034c288f837efcbf572c Mon Sep 17 00:00:00 2001
+From: Leandro Dorileo <leandro.maciel.dorileo@intel.com>
+Date: Thu, 19 Sep 2019 10:05:20 -0700
+Subject: [PATCH] install pkgconfig descriptor
+
+Signed-off-by: Leandro Dorileo <leandro.maciel.dorileo@intel.com>
+---
+ libraries/liblmdb/Makefile |  3 +++
+ libraries/liblmdb/lmdb.pc  | 10 ++++++++++
+ 2 files changed, 13 insertions(+)
+ create mode 100644 libraries/liblmdb/lmdb.pc
+
+diff --git a/libraries/liblmdb/Makefile b/libraries/liblmdb/Makefile
+index ac40f9e..bcccf1b 100644
+--- a/libraries/liblmdb/Makefile
++++ b/libraries/liblmdb/Makefile
+@@ -31,6 +31,7 @@ prefix	= /usr
+ exec_prefix = $(prefix)
+ bindir = $(exec_prefix)/bin
+ libdir = $(exec_prefix)/lib64
++pkgconfigdir = $(libdir)/pkgconfig
+ includedir = $(prefix)/include
+ datarootdir = $(prefix)/share
+ mandir = $(datarootdir)/man
+@@ -49,10 +50,12 @@ install: $(ILIBS) $(IPROGS) $(IHDRS)
+ 	mkdir -p $(DESTDIR)$(libdir)
+ 	mkdir -p $(DESTDIR)$(includedir)
+ 	mkdir -p $(DESTDIR)$(mandir)/man1
++	mkdir -p $(DESTDIR)$(pkgconfigdir)
+ 	for f in $(IPROGS); do cp $$f $(DESTDIR)$(bindir); done
+ 	for f in $(ILIBS); do cp $$f $(DESTDIR)$(libdir); done
+ 	for f in $(IHDRS); do cp $$f $(DESTDIR)$(includedir); done
+ 	for f in $(IDOCS); do cp $$f $(DESTDIR)$(mandir)/man1; done
++	cp lmdb.pc $(DESTDIR)$(pkgconfigdir)/lmdb.pc
+ 
+ clean:
+ 	rm -rf $(PROGS) *.[ao] *.[ls]o *~ testdb
+diff --git a/libraries/liblmdb/lmdb.pc b/libraries/liblmdb/lmdb.pc
+new file mode 100644
+index 0000000..8f75d54
+--- /dev/null
++++ b/libraries/liblmdb/lmdb.pc
+@@ -0,0 +1,10 @@
++prefix=/usr
++libdir=${prefix}/lib64
++includedir=${prefix}/include
++
++Name: liblmdb
++Description: Lightning Memory-Mapped Database
++URL: https://symas.com/products/lightning-memory-mapped-database/
++Version: 0.9.24
++Libs: -L${libdir} -llmdb
++Cflags: -I${includedir}
+-- 
+2.23.0
+

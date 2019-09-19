@@ -4,7 +4,7 @@
 #
 Name     : lmdb
 Version  : 0.9.24
-Release  : 14
+Release  : 15
 URL      : https://github.com/LMDB/lmdb/archive/LMDB_0.9.24/lmdb-0.9.24.tar.gz
 Source0  : https://github.com/LMDB/lmdb/archive/LMDB_0.9.24/lmdb-0.9.24.tar.gz
 Summary  : Symas Lightning Memory-Mapped Database
@@ -15,6 +15,7 @@ Requires: lmdb-lib = %{version}-%{release}
 Requires: lmdb-license = %{version}-%{release}
 Requires: lmdb-man = %{version}-%{release}
 Patch1: build.patch
+Patch2: 0001-install-pkgconfig-descriptor.patch
 
 %description
 No detailed description available
@@ -34,7 +35,6 @@ Group: Development
 Requires: lmdb-lib = %{version}-%{release}
 Requires: lmdb-bin = %{version}-%{release}
 Provides: lmdb-devel = %{version}-%{release}
-Requires: lmdb = %{version}-%{release}
 Requires: lmdb = %{version}-%{release}
 
 %description dev
@@ -69,13 +69,14 @@ man components for the lmdb package.
 %prep
 %setup -q -n lmdb-LMDB_0.9.24
 %patch1 -p1
+%patch2 -p1
 
 %build
 export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C.UTF-8
-export SOURCE_DATE_EPOCH=1563733007
+export SOURCE_DATE_EPOCH=1568919721
 export GCC_IGNORE_WERROR=1
 export AR=gcc-ar
 export RANLIB=gcc-ranlib
@@ -90,9 +91,10 @@ popd
 
 
 %install
-export SOURCE_DATE_EPOCH=1563733007
+export SOURCE_DATE_EPOCH=1568919721
 rm -rf %{buildroot}
 mkdir -p %{buildroot}/usr/share/package-licenses/lmdb
+cp libraries/liblmdb/COPYRIGHT %{buildroot}/usr/share/package-licenses/lmdb/libraries_liblmdb_COPYRIGHT
 cp libraries/liblmdb/LICENSE %{buildroot}/usr/share/package-licenses/lmdb/libraries_liblmdb_LICENSE
 pushd libraries/liblmdb/
 %make_install
@@ -110,7 +112,8 @@ popd
 
 %files dev
 %defattr(-,root,root,-)
-/usr/include/*.h
+/usr/include/lmdb.h
+/usr/lib64/pkgconfig/lmdb.pc
 
 %files lib
 %defattr(-,root,root,-)
@@ -118,6 +121,7 @@ popd
 
 %files license
 %defattr(0644,root,root,0755)
+/usr/share/package-licenses/lmdb/libraries_liblmdb_COPYRIGHT
 /usr/share/package-licenses/lmdb/libraries_liblmdb_LICENSE
 
 %files man
