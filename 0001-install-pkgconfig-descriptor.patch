@@ -1,4 +1,4 @@
-From 01fc5eda4ecafb0a15c0034c288f837efcbf572c Mon Sep 17 00:00:00 2001
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
 From: Leandro Dorileo <leandro.maciel.dorileo@intel.com>
 Date: Thu, 19 Sep 2019 10:05:20 -0700
 Subject: [PATCH] install pkgconfig descriptor
@@ -11,7 +11,7 @@ Signed-off-by: Leandro Dorileo <leandro.maciel.dorileo@intel.com>
  create mode 100644 libraries/liblmdb/lmdb.pc
 
 diff --git a/libraries/liblmdb/Makefile b/libraries/liblmdb/Makefile
-index ac40f9e..bcccf1b 100644
+index ac40f9e..fca3b89 100644
 --- a/libraries/liblmdb/Makefile
 +++ b/libraries/liblmdb/Makefile
 @@ -31,6 +31,7 @@ prefix	= /usr
@@ -51,6 +51,3 @@ index 0000000..8f75d54
 +Version: 0.9.24
 +Libs: -L${libdir} -llmdb
 +Cflags: -I${includedir}
--- 
-2.23.0
-
