@@ -1,0 +1,4 @@
+Symas LMDB is an extraordinarily fast, memory-efficient database we developed
+for the OpenLDAP Project. With memory-mapped files, it has the read performance
+of a pure in-memory database while retaining the persistence of standard
+disk-based databases.

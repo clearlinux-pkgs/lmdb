@@ -4,10 +4,10 @@
 #
 Name     : lmdb
 Version  : 0.9.24
-Release  : 15
+Release  : 16
 URL      : https://github.com/LMDB/lmdb/archive/LMDB_0.9.24/lmdb-0.9.24.tar.gz
 Source0  : https://github.com/LMDB/lmdb/archive/LMDB_0.9.24/lmdb-0.9.24.tar.gz
-Summary  : Symas Lightning Memory-Mapped Database
+Summary  : Key-value embedded data store
 Group    : Development/Tools
 License  : OLDAP-2.8
 Requires: lmdb-bin = %{version}-%{release}
@@ -16,9 +16,13 @@ Requires: lmdb-license = %{version}-%{release}
 Requires: lmdb-man = %{version}-%{release}
 Patch1: build.patch
 Patch2: 0001-install-pkgconfig-descriptor.patch
+Patch3: 0002-Add-soname-for-liblmdb.so.patch
 
 %description
-No detailed description available
+Symas LMDB is an extraordinarily fast, memory-efficient database we developed
+for the OpenLDAP Project. With memory-mapped files, it has the read performance
+of a pure in-memory database while retaining the persistence of standard
+disk-based databases.
 
 %package bin
 Summary: bin components for the lmdb package.
@@ -70,13 +74,14 @@ man components for the lmdb package.
 %setup -q -n lmdb-LMDB_0.9.24
 %patch1 -p1
 %patch2 -p1
+%patch3 -p1
 
 %build
 export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C.UTF-8
-export SOURCE_DATE_EPOCH=1568919721
+export SOURCE_DATE_EPOCH=1571681360
 export GCC_IGNORE_WERROR=1
 export AR=gcc-ar
 export RANLIB=gcc-ranlib
@@ -86,16 +91,16 @@ export FCFLAGS="$CFLAGS -O3 -ffat-lto-objects -flto=4 "
 export FFLAGS="$CFLAGS -O3 -ffat-lto-objects -flto=4 "
 export CXXFLAGS="$CXXFLAGS -O3 -ffat-lto-objects -flto=4 "
 pushd libraries/liblmdb/
-make  %{?_smp_mflags}
+make  %{?_smp_mflags}  XCFLAGS="$CFLAGS"
 popd
 
 
 %install
-export SOURCE_DATE_EPOCH=1568919721
+export SOURCE_DATE_EPOCH=1571681360
 rm -rf %{buildroot}
 mkdir -p %{buildroot}/usr/share/package-licenses/lmdb
-cp libraries/liblmdb/COPYRIGHT %{buildroot}/usr/share/package-licenses/lmdb/libraries_liblmdb_COPYRIGHT
-cp libraries/liblmdb/LICENSE %{buildroot}/usr/share/package-licenses/lmdb/libraries_liblmdb_LICENSE
+cp %{_builddir}/lmdb-LMDB_0.9.24/libraries/liblmdb/COPYRIGHT %{buildroot}/usr/share/package-licenses/lmdb/b74295898da7a6c7b73cb516f4b5fdb1ea641e52
+cp %{_builddir}/lmdb-LMDB_0.9.24/libraries/liblmdb/LICENSE %{buildroot}/usr/share/package-licenses/lmdb/bc06cbdf781c87d2df2fe385214f936d010dd2a2
 pushd libraries/liblmdb/
 %make_install
 popd
@@ -121,8 +126,8 @@ popd
 
 %files license
 %defattr(0644,root,root,0755)
-/usr/share/package-licenses/lmdb/libraries_liblmdb_COPYRIGHT
-/usr/share/package-licenses/lmdb/libraries_liblmdb_LICENSE
+/usr/share/package-licenses/lmdb/b74295898da7a6c7b73cb516f4b5fdb1ea641e52
+/usr/share/package-licenses/lmdb/bc06cbdf781c87d2df2fe385214f936d010dd2a2
 
 %files man
 %defattr(0644,root,root,0755)
