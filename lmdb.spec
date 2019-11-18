@@ -4,7 +4,7 @@
 #
 Name     : lmdb
 Version  : 0.9.24
-Release  : 16
+Release  : 17
 URL      : https://github.com/LMDB/lmdb/archive/LMDB_0.9.24/lmdb-0.9.24.tar.gz
 Source0  : https://github.com/LMDB/lmdb/archive/LMDB_0.9.24/lmdb-0.9.24.tar.gz
 Summary  : Key-value embedded data store
