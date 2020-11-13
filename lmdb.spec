@@ -4,7 +4,7 @@
 #
 Name     : lmdb
 Version  : 0.9.24
-Release  : 17
+Release  : 18
 URL      : https://github.com/LMDB/lmdb/archive/LMDB_0.9.24/lmdb-0.9.24.tar.gz
 Source0  : https://github.com/LMDB/lmdb/archive/LMDB_0.9.24/lmdb-0.9.24.tar.gz
 Summary  : Key-value embedded data store
@@ -72,6 +72,7 @@ man components for the lmdb package.
 
 %prep
 %setup -q -n lmdb-LMDB_0.9.24
+cd %{_builddir}/lmdb-LMDB_0.9.24
 %patch1 -p1
 %patch2 -p1
 %patch3 -p1
@@ -81,14 +82,14 @@ export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C.UTF-8
-export SOURCE_DATE_EPOCH=1571681360
+export SOURCE_DATE_EPOCH=1605244471
 export GCC_IGNORE_WERROR=1
 export AR=gcc-ar
 export RANLIB=gcc-ranlib
 export NM=gcc-nm
 export CFLAGS="$CFLAGS -O3 -ffat-lto-objects -flto=4 "
-export FCFLAGS="$CFLAGS -O3 -ffat-lto-objects -flto=4 "
-export FFLAGS="$CFLAGS -O3 -ffat-lto-objects -flto=4 "
+export FCFLAGS="$FFLAGS -O3 -ffat-lto-objects -flto=4 "
+export FFLAGS="$FFLAGS -O3 -ffat-lto-objects -flto=4 "
 export CXXFLAGS="$CXXFLAGS -O3 -ffat-lto-objects -flto=4 "
 pushd libraries/liblmdb/
 make  %{?_smp_mflags}  XCFLAGS="$CFLAGS"
@@ -96,7 +97,7 @@ popd
 
 
 %install
-export SOURCE_DATE_EPOCH=1571681360
+export SOURCE_DATE_EPOCH=1605244471
 rm -rf %{buildroot}
 mkdir -p %{buildroot}/usr/share/package-licenses/lmdb
 cp %{_builddir}/lmdb-LMDB_0.9.24/libraries/liblmdb/COPYRIGHT %{buildroot}/usr/share/package-licenses/lmdb/b74295898da7a6c7b73cb516f4b5fdb1ea641e52
